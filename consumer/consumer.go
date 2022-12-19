@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	worker, err := connector.Consumer([]string{"127.0.0.1:9999"})
+	worker, err := connector.Consumer()
 	if err != nil {
 		panic(err)
 	}

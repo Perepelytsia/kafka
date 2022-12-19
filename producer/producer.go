@@ -27,9 +27,7 @@ func main() {
 }
 
 func PushCommentToQueue(topic string, message []byte) error {
-
-	brokersUrl := []string{"127.0.0.1:9999"}
-	producer, err := connector.Producer(brokersUrl)
+	producer, err := connector.Producer()
 	if err != nil {
 		return err
 	}
