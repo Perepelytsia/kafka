@@ -7,10 +7,11 @@ import (
 	"syscall"
 
 	"github.com/Shopify/sarama"
+	"github.com/perepelytsia/kafka/connector"
 )
 
 func main() {
-	worker, err := connectConsumer([]string{"127.0.0.1:9999"})
+	worker, err := connector.Consumer([]string{"127.0.0.1:9999"})
 	if err != nil {
 		panic(err)
 	}
@@ -53,17 +54,4 @@ func main() {
 		panic(err)
 	}
 
-}
-
-func connectConsumer(brokersUrl []string) (sarama.Consumer, error) {
-	config := sarama.NewConfig()
-	config.Consumer.Return.Errors = true
-
-	// Create new consumer
-	conn, err := sarama.NewConsumer(brokersUrl, config)
-	if err != nil {
-		return nil, err
-	}
-
-	return conn, nil
 }

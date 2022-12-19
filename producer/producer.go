@@ -7,6 +7,7 @@ import (
 
 	"github.com/Shopify/sarama"
 	"github.com/gofiber/fiber/v2"
+	"github.com/perepelytsia/kafka/connector"
 )
 
 // Comment struct
@@ -25,25 +26,10 @@ func main() {
 
 }
 
-func ConnectProducer(brokersUrl []string) (sarama.SyncProducer, error) {
-
-	config := sarama.NewConfig()
-	config.Producer.Return.Successes = true
-	config.Producer.RequiredAcks = sarama.WaitForAll
-	config.Producer.Retry.Max = 5
-
-	conn, err := sarama.NewSyncProducer(brokersUrl, config)
-	if err != nil {
-		return nil, err
-	}
-
-	return conn, nil
-}
-
 func PushCommentToQueue(topic string, message []byte) error {
 
 	brokersUrl := []string{"127.0.0.1:9999"}
-	producer, err := ConnectProducer(brokersUrl)
+	producer, err := connect.Producer(brokersUrl)
 	if err != nil {
 		return err
 	}
